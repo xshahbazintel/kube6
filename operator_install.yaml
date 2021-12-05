@@ -1,0 +1,12 @@
+#operator install
+---
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  calicoNetwork:
+     nodeAddressAutodetectionV4: {}
+     nodeAddressAutodetectionV6:
+       interface: enp1s0
+---
