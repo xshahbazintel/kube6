@@ -45,3 +45,6 @@ echo $CERT | base64 --decode | openssl x509 -noout -text
 ## issue doesn't work with EC parameters, 
 ## the key created directly. openssl ecparam -out root-key.pem -name prime256v1 -genkey
 error   failed to create discovery service: failed to create CA: failed to create an istiod CA: failed to create CA KeyCertBundle (failed to parse private key PEM: unsupported PEM block type for a private key: EC PARAMETERS)
+
+## References
+https://events.istio.io/istiocon-2021/slides/c9t4-UsingECCCertificates-JacobDelgado.pdf
