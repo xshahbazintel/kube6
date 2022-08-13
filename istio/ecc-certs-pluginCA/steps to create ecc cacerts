@@ -1,4 +1,4 @@
-## create a rootCA private key
+## create a rootCA private key, only P-256 is supported
 openssl ecparam -out root-key.pem -name prime256v1 -genkey -noout
 ## generate root-ca csr from istio make ca-conf file
 openssl req -new -key root-key.pem -config root-ca.conf -out root-cert.csr
