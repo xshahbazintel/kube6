@@ -9,6 +9,7 @@ configuration applied to the corresponding daemons
 Modify the configuration files
 $ sudo sed -i 's/bgpd=no/bgpd=yes/' /var/lib/docker/volumes/frr_frr_config/_data/daemons
 $ sudo sed -i 's/bfdd=no/bfdd=yes/' /var/lib/docker/volumes/frr_frr_config/_data/daemons
+$ touch /var/lib/docker/volumes/frr_frr_config/_data/vtysh.conf
 
 Docker compose restart
 

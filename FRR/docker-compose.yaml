@@ -1,7 +1,9 @@
 version: "3.9"
 services:
     frr:
-        image: frrouting/frr
+        image: frrouting/frr:v7.5.1
+        hostname: frr01
+        container_name: frr01
         network_mode: host
         restart: always
         volumes:
