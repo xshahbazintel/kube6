@@ -17,7 +17,9 @@ docker exec frr01 vtysh \
     -c "router bgp $local_as" \
     -c "no bgp ebgp-requires-policy" \
     -c "no bgp default ipv4-unicast" \
-    -c "no bgp network import-check"
+    -c "no bgp network import-check" \
+    -c "end" \
+    -c "exit"
 
 for addr in "${ipv6_addrs[@]}"
 do
@@ -28,6 +30,7 @@ do
     -c "neighbor $addr remote-as $remote_as" \
     -c "address-family ipv6 unicast" \
     -c "neighbor $addr activate" \
-    -c "exit" \
+    -c "end" \
+    -c "write" \
     -c "exit"
 done
