@@ -1,4 +1,4 @@
-Update the below values in the setup-bgp.sh
+## Update the below values in the setup-bgp.sh
 
 ipv6_addrs > all the worker nodes addresses that will be included in bgp peering
 
