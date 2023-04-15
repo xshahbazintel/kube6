@@ -1,16 +1,13 @@
 #!/bin/bash
 
-set -e
+set -E
 
 # Specify the IPv6 addresses in an array
-ipv6_addrs=(
-    "fd74:ca9b:3a09:868c:10:9:65:1"
-    "fd74:ca9b:3a09:868c:10:9:65:2"
-)
+peers=("${PEERS[@]}")
 
-local_as=65100
+local_as=$LOCAL_AS
 
-remote_as=64500
+remote_as=$REMOTE_AS
 
 docker exec frr01 vtysh \
     -c "configure terminal" \
@@ -21,16 +18,27 @@ docker exec frr01 vtysh \
     -c "end" \
     -c "exit"
 
-for addr in "${ipv6_addrs[@]}"
+for addr in "${peers[@]}"
 do
+    # Determine the IP address family of the peer
+    if [[ $addr == *:* ]]; then
+      family="ipv6"
+    else
+      family="ipv4"
+    fi
+
     # Configure BGP peering using the current IPv6 address and remote AS
     docker exec frr01 vtysh \
     -c "configure terminal" \
     -c "router bgp $local_as" \
     -c "neighbor $addr remote-as $remote_as" \
-    -c "address-family ipv6 unicast" \
+    -c "address-family $family unicast" \
     -c "neighbor $addr activate" \
     -c "end" \
-    -c "write" \
     -c "exit"
 done
+
+#save the configuration
+docker exec frr01 vtysh \
+    -c "write" \
+    -c "exit"
