@@ -1,6 +1,6 @@
 ## Update the below values in the setup-bgp.sh
 
-add BGP peers in the PEERS array e.g. The values in the array can be IPv4 or IPv6 address
+add BGP peers in the PEERS array, The values in the array can be IPv4 or IPv6 address e.g.
 
 export PEERS=(fd74:ca9b:3a09:868c:10:9:65:1 fd74:ca9b:3a09:868c:10:9:65:2)
 
