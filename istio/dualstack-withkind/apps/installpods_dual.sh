@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# after istio dualstack feature, this works even if the cluster is single stack ipv4 but secondary ipv6 interface is added.
+# this works even without excluding interfaces when istio is installed in dualstack mode in a single stack ipv6 cluster.
 
 # label namespace for injection
 kubectl label ns default istio-injection=enabled --overwrite

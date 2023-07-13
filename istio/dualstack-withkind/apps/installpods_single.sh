@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# test pods on a single stack ipv6 cluster with a secondary ipv4 address, this is supposed to fail without excluding interface net1
+# test pods on a single stack ipv6 cluster and istio in single stack mode with a secondary ipv4 address, this is supposed to fail without excluding interface net1
 
 # label namespace for injection
 kubectl label ns default istio-injection=enabled --overwrite
