@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# test pods on a single stack ipv6 cluster with a secondary ipv4 address, this is supposed to fail without excluding interface net1
+
 # label namespace for injection
 kubectl label ns default istio-injection=enabled --overwrite
 
@@ -10,6 +12,7 @@ kind: Pod
 metadata:
   name: pod-validunicast
   annotations:
+    traffic.sidecar.istio.io/excludeInterfaces: net1
     k8s.v1.cni.cncf.io/networks: '[
             { "name": "macvlan-conf-static",
               "ips": [ "10.1.1.11/24" ] }
@@ -29,6 +32,7 @@ kind: Pod
 metadata:
   name: pod-linklocal
   annotations:
+    traffic.sidecar.istio.io/excludeInterfaces: net1
     k8s.v1.cni.cncf.io/networks: '[
             { "name": "macvlan-conf-static",
               "ips": [ "169.254.1.11/24" ] }
