@@ -9,8 +9,8 @@ fi
 
 CLUSTER_NAME=ipv6singlestack
 
-# Create a cluster with name ambient
-echo "Creating cluster ambient..."
+# Create an ipv6 single stack cluster
+echo "Creating cluster $CLUSTER_NAME..."
 kind create cluster --name $CLUSTER_NAME --config cluster_ipv6.yaml
 
 # Verify that the cluster is running
