@@ -27,3 +27,6 @@ spec:
         }'
 ---
 EOF
+
+# install cni plugins
+kubectl create -f cni-install.yaml
