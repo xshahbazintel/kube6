@@ -1,6 +1,7 @@
 #!/bin/bash
 
-istioctl_latest=/root/dev/istio/out/linux_amd64/istioctl
+# point this to your latest build binary
+istioctl_latest=~/dev/istio/out/linux_amd64/istioctl
 
 # Install istio ambient profile
 echo "Installing istio..."
