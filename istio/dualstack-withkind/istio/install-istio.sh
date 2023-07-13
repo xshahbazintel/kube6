@@ -1,8 +1,10 @@
 #!/bin/bash
 
+istioctl_latest=/root/dev/istio/out/linux_amd64/istioctl
+
 # Install istio ambient profile
 echo "Installing istio..."
-istioctl install --set profile=ambient --set components.ingressGateways[0].enabled=true --set components.ingressGateways[0].name=istio-ingressgateway --skip-confirmation
+$istioctl_latest install -f iop_dual.yaml --skip-confirmation
 
 # Verify that istio is installed
 echo "Verifying istio installation..."
