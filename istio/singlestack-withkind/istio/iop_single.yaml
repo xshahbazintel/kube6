@@ -5,3 +5,5 @@ metadata:
 spec:
 #  hub: docker.io/abasitt
 #  tag: abasitt
+  meshConfig:
+    accessLogFile: /dev/stdout
