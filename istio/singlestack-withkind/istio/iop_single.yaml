@@ -3,5 +3,5 @@ kind: IstioOperator
 metadata:
   name: istio
 spec:
-  hub: docker.io/abasitt
-  tag: abasitt
+#  hub: docker.io/abasitt
+#  tag: abasitt

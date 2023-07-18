@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CLUSTER_NAME=ipv6singlestack
-HUB=abasitt
-TAG=abasitt
+CLUSTER_NAME=ipv4single
+HUB=docker.io/istio
+TAG=1.18.1
 
 #load pilot and proxyv images
 kind load docker-image --name $CLUSTER_NAME $HUB/pilot:$TAG
