@@ -1,0 +1,15 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio
+spec:
+  hub: docker.io/abasitt
+  tag: abasitt
+  meshConfig:
+    defaultConfig:
+      proxyMetadata:
+        ISTIO_DUAL_STACK: "true"
+  values:
+    pilot:
+      env:
+        ISTIO_DUAL_STACK: true
