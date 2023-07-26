@@ -4,7 +4,7 @@
 CLUSTER1_NAME=clu1
 CLUSTER2_NAME=clu2
 CLUSTER1_CTX=kind-clu1 
-CLUSTER2_CTX=kind-clu1
+CLUSTER2_CTX=kind-clu2
 HUB=docker.io/istio
 TAG=1.18.1
 

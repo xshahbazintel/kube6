@@ -8,7 +8,7 @@ docker pull quay.io/metallb/speaker:v0.13.10
 CLUSTER1_NAME=clu1
 CLUSTER2_NAME=clu2
 CLUSTER1_CTX=kind-clu1 
-CLUSTER2_CTX=kind-clu1
+CLUSTER2_CTX=kind-clu2
 
 # Load images to both clusters
 echo "Loading metallb images to both clusters..."
