@@ -1,0 +1,17 @@
+# sample netshoot pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-pod
+spec:
+  hostAliases:
+  - ip: "172.18.255.121"
+    hostnames:
+    - "foo.kindclu2.test"
+    - "bar.kindclu2.test"
+  containers:
+  - name: netshoot
+    image: nicolaka/netshoot
+    command: ["sleep"]
+    args: ["infinity"]
+
