@@ -7,7 +7,7 @@ spec:
   hosts:
   - *.foo.kindclu2.test
   - *.bar.kindclu2.test
-  - *.dfault.kindclu2.test
+  - *.default.kindclu2.test
   location: MESH_INTERNAL
   ports:
   - number: 8080
