@@ -5,9 +5,9 @@ metadata:
   namespace : default
 spec:
   hosts:
-  - *.clu2foo.example.test
-  - *.clu2bar.example.test
-  - *.clu2default.example.test
+  - *.foo.kindclu2.test
+  - *.bar.kindclu2.test
+  - *.dfault.kindclu2.test
   location: MESH_INTERNAL
   ports:
   - number: 8080
@@ -19,3 +19,5 @@ spec:
   resolution: STATIC
   endpoints:
   - address: 172.18.255.121
+    ports:
+      http: 80
