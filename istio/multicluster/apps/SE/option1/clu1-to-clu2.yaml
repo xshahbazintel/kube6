@@ -5,8 +5,9 @@ metadata:
   namespace : default
 spec:
   hosts:
-  - "*.clu2default.example.test"  #have to be resolved by infra external DNS
-  - "helloworld.clu2default.example.test" #Istio DNS proxy can auto-resolve this one
+#  - "*.clu2default.example.test"  #have to be resolved by infra external DNS, Not supported by Istio DNS proxy with wildcard entries.
+  - "helloworld.default.cluster.local" #Istio DNS proxy can auto-resolve it
+  - "httpbin.default.cluster.local" #Istio DNS proxy can auto-resolve it
   location: MESH_INTERNAL
   ports:
   - number: 8080
