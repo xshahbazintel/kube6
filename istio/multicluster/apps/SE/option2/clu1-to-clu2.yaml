@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: to-kind-clu2
+  namespace : default
+spec:
+  hosts:
+  - "*.clu2default.cluster.global"
+  location: MESH_INTERNAL
+  ports:
+  - number: 8080
+    name: http1
+    protocol: HTTP
+  - number: 8081
+    name: http2
+    protocol: HTTP
+  resolution: STATIC
+  endpoints:
+  - address: 172.18.255.121
+    ports:
+      http1: 80
+      http2: 80

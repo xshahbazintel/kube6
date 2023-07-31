@@ -1,0 +1,21 @@
+#optional disable tls, usually should be default to disabled
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: disable-mtls-helloworld
+spec:
+  host: helloworld.default.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: disable-mtls-httpbin
+spec:
+  host: httbpin.default.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
