@@ -5,18 +5,14 @@ metadata:
   namespace : default
 spec:
   hosts:
-  - "*.clu2default.cluster.global"
+  - "clu2.cluster.global"
   location: MESH_INTERNAL
   ports:
-  - number: 8080
+  - number: 80
     name: http1
-    protocol: HTTP
-  - number: 8081
-    name: http2
     protocol: HTTP
   resolution: STATIC
   endpoints:
   - address: 172.18.255.121
     ports:
       http1: 80
-      http2: 80
