@@ -1,9 +1,8 @@
 #!/bin/bash
-
-CLUSTER_NAME=ipv4
+. ../config.sh
 
 # Delete the cluster with name ambient
-echo "Deleting cluster ambient..."
+echo "Deleting cluster $CLUSTER_NAME..."
 kind delete cluster --name $CLUSTER_NAME
 
 # Verify that the cluster is deleted

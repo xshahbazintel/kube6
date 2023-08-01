@@ -1,9 +1,5 @@
 #!/bin/bash
-
-CLUSTER_NAME=ipv4
-CLUSTER_CTX=kind-ipv4
-HUB=docker.io/istio
-TAG=1.18.1
+. ../config.sh
 
 # Download images to a docker host
 echo "Pulling images to a docker host..."
