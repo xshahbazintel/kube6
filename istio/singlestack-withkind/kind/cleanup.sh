@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLUSTER_NAME=ipv6singlestack
+CLUSTER_NAME=ipv4
 
 # Delete the cluster with name ambient
 echo "Deleting cluster ambient..."
