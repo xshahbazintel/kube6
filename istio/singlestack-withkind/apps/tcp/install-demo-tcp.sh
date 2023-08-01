@@ -1,7 +1,5 @@
 #!/bin/bash
-
-CLUSTER_NAME=ipv4
-CLUSTER_CTX=kind-ipv4
+. ../config.sh
 
 # load tcp echo images to kind
 echo "Pulling images to a docker host..."
