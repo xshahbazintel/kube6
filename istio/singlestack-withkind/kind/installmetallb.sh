@@ -1,4 +1,16 @@
 #!/bin/bash
+. ../config.sh
+
+
+# download docker images to a host
+echo "Pulling metallb images to a docker host..."
+docker pull quay.io/metallb/controller:v0.13.10
+docker pull quay.io/metallb/speaker:v0.13.10
+
+# Load images to both clusters
+echo "Loading metallb images to both clusters..."
+kind load docker-image --name $CLUSTER_NAME quay.io/metallb/controller:v0.13.10
+kind load docker-image --name $CLUSTER_NAME quay.io/metallb/speaker:v0.13.10
 
 # Install metallb using the latest version 0.14
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-frr.yaml

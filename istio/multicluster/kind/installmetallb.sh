@@ -15,8 +15,8 @@ echo "Loading metallb images to both clusters..."
 kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
 kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
 
-kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/controller:v0.13.10
-kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/controller:v0.13.10
+kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
+kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
 
 # Install metallb using the latest version 13.10
 echo "install metallb on $CLUSTER1_NAME..."
