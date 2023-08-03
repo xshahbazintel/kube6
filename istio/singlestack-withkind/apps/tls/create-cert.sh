@@ -7,6 +7,12 @@ else
   DIR="/tmp"
 fi
 
+# Check if the cert already exists in the directory
+if [ -f "$DIR/nginx.crt" ]; then
+  echo "The cert already exists in $DIR. Please delete it or use a different directory."
+  exit 1
+fi
+
 # Generate a self-signed certificate and private key for nginx using openssl
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout "$DIR/nginx.key" -out "$DIR/nginx.crt" -subj "/CN=nginx.example.com" -addext "subjectAltName = DNS:nginx.example.com"
 

@@ -9,13 +9,13 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 443
-      targetPort: 443
+      port: 4335
+      targetPort: 4335
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx
 spec:
   selector:
     matchLabels:
@@ -30,13 +30,17 @@ spec:
       - name: nginx
         image: nginx:1.25.1-alpine
         ports:
-        - containerPort: 443
+        - containerPort: 4335
         volumeMounts:
         - name: nginx-conf
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
         - name: nginx-example-tls
-          mountPath: /etc/nginx/tls
+          mountPath: /etc/nginx/tls/nginx.crt
+          subPath: tls.crt
+        - name: nginx-example-tls
+          mountPath: /etc/nginx/tls/nginx.key
+          subPath: tls.key
       volumes:
       - name: nginx-conf
         configMap:
