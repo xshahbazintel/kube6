@@ -23,3 +23,5 @@ kubectl --context="${CLUSTER_CTX}" label ns default istio-injection=enabled --ov
 kubectl create configmap nginx-conf --from-file=nginx.conf
 kubectl --context="${CLUSTER_CTX}" apply -f nginx.yaml
 
+# for testing tls use
+# openssl s_client -connect server:port
