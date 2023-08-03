@@ -25,3 +25,4 @@ kubectl --context="${CLUSTER_CTX}" apply -f nginx.yaml
 
 # for testing tls use
 # openssl s_client -connect server:port
+# example logs [2023-08-03T04:52:16.359Z] "- - -" 0 - - - "-" 439 1925 60036 - "-" "-" "-" "-" "10.244.2.7:4335" inbound|4335|| 127.0.0.6:51141 10.244.2.7:4335 172.18.0.4:33167 - -
