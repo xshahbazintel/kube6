@@ -1,0 +1,51 @@
+---
+version: "2.1"
+services:
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /path/to/config:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    shm_size: "1gb"
+    restart: unless-stopped
+# openldap
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      - LDAP_ORGANISATION=Example Inc.
+      - LDAP_DOMAIN=example.com
+      - LDAP_ADMIN_PASSWORD=admin
+    ports:
+      - "389:389"
+      - "636:636"
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8080:80"
+    depends_on:
+      - openldap
+networks:
+  default:
+    external:
+      name: kind
+
+
+# inside keycloak, click on the left user federation
+# add connection url ldap://openldap:389, click test and we can see connection in the sidecar proxy via a passthrough cluster
+# add bind DN as cn=admin,dc=example,dc=com with bind type simple
+# credentials admin
+# LDAP searching and updating, userDN as ou=people,dc=example,dc=com, i picked the mode READ_ONLY for testing
