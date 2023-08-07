@@ -1,11 +1,11 @@
 #!/bin/bash
 . ../config.sh
 
-# Install kind if not already installed
+# Exit script if kind not installed
 if ! command -v kind &> /dev/null
 then
-  echo "Installing kind..."
-  go install sigs.k8s.io/kind@v0.19.0 # use go install instead of go get
+  echo "Kind not found, please install out of script..."
+  exit 1
 fi
 
 # Create an ipv6 single stack cluster
