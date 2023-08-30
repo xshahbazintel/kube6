@@ -60,11 +60,13 @@ helm repo add cilium https://helm.cilium.io/
 echo "Installing cilium on $CLUSTER1_NAME..."
 helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER1_CTX \
    --namespace kube-system \
+   --set operator.replicas=1 \
    --set image.pullPolicy=IfNotPresent \
    --set ipam.mode=kubernetes
 
 echo "Installing cilium on $CLUSTER2_NAME..."
 helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER2_CTX \
    --namespace kube-system \
+   --set operator.replicas=1 \
    --set image.pullPolicy=IfNotPresent \
    --set ipam.mode=kubernetes

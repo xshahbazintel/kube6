@@ -23,7 +23,7 @@ kind load docker-image --name $CLUSTER2_NAME $HUB/proxyv2:$TAG
 # point this to your latest build binary
 istioctl_latest=/usr/local/bin/istioctl
 
-# Install istio ambient profile
+# Install istio iop profile
 echo "Installing istio..."
 $istioctl_latest install --context="${CLUSTER1_CTX}" -f iop.yaml --skip-confirmation
 $istioctl_latest install --context="${CLUSTER2_CTX}" -f iop.yaml --skip-confirmation
