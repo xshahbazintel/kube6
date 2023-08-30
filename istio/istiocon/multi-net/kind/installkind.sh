@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../config.sh
+. ../../config.sh
 
 # Create cluster1 cluster
 echo "Creating cluster $CLUSTER1_NAME..."

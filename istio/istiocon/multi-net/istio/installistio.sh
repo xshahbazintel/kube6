@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../config.sh
+. ../../config.sh
 
 # download istio images to a host
 echo "Pulling istio images to a docker host..."

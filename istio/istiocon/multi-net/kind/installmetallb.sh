@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../config.sh
+. ../../config.sh
 
 # download docker images to a host
 echo "Pulling metallb images to a docker host..."

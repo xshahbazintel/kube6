@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../config.sh
+. ../../config.sh
 
 # Delete the cluster with name ambient
 echo "Deleting $CLUSTER1_NAME..."
