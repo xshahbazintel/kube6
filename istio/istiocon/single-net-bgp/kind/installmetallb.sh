@@ -22,6 +22,8 @@ kubectl apply --context="${CLUSTER1_CTX}" -f https://raw.githubusercontent.com/m
 echo "install metallb on $CLUSTER2_NAME..."
 kubectl apply --context="${CLUSTER2_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 
+sleep 20
+
 #create metallb pool and L2 advertisment
 echo "creating metallb l2 pool on $CLUSTER3_NAME..."
 kubectl apply --context="${CLUSTER3_CTX}" -f - <<EOF

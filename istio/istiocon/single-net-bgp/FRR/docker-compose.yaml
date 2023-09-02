@@ -4,12 +4,25 @@ services:
         image: frrouting/frr:latest
         hostname: frr_kind
         container_name: frr_kind
-        network_mode: kind
+#        network_mode: kind
         restart: always
         volumes:
           - frr_config:/etc/frr
         privileged: true
+        networks:
+          # use the custom network name here
+          kind:
+            # assign a static IP address from the subnet here
+            ipv4_address: 172.18.255.251
 
 volumes:
   frr_config:
     driver: local
+networks:
+  # use the same network name as above here
+  kind:
+    external: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16

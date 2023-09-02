@@ -2,14 +2,27 @@
 
 set -E
 
-# Specify the IPv6 addresses in an array
-peers=("${PEERS[@]}")
+declare -a peers
+
+#clu3 peers
+while IFS= read -r node; do
+  # get the IP address of the node using docker inspect
+  ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$node")
+  # append the IP address to the array
+  peers+=("$ip")
+done < <(kind get nodes --name clu4)
+
+# print the array elements
+echo "${peers[@]}"
+
+export LOCAL_AS=65100
+export REMOTE_AS=64504
 
 local_as=$LOCAL_AS
 
 remote_as=$REMOTE_AS
 
-docker exec frr01 vtysh \
+docker exec frr_kind vtysh \
     -c "configure terminal" \
     -c "router bgp $local_as" \
     -c "no bgp ebgp-requires-policy" \
@@ -28,7 +41,7 @@ do
     fi
 
     # Configure BGP peering using the current IPv6 address and remote AS
-    docker exec frr01 vtysh \
+    docker exec frr_kind vtysh \
     -c "configure terminal" \
     -c "router bgp $local_as" \
     -c "neighbor $addr remote-as $remote_as" \
@@ -39,6 +52,6 @@ do
 done
 
 #save the configuration
-docker exec frr01 vtysh \
+docker exec frr_kind vtysh \
     -c "write" \
     -c "exit"
