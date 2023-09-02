@@ -61,16 +61,22 @@ echo "Installing cilium on $CLUSTER3_NAME..."
 helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER3_CTX \
    --namespace kube-system \
    --set cluster.name=clu3 \
+   --set cluster.id=3 \
    --set operator.replicas=1 \
    --set image.pullPolicy=IfNotPresent \
    --set ipam.mode=kubernetes \
-   --set bgpControlPlane.enabled=true
+   --set bgpControlPlane.enabled=true \
+   --set tunnel=disabled \
+   --set ipv4NativeRoutingCIDR=10.0.0.0/8
 
 echo "Installing cilium on $CLUSTER4_NAME..."
 helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER4_CTX \
    --namespace kube-system \
    --set cluster.name=clu4 \
+   --set cluster.id=4 \
    --set operator.replicas=1 \
    --set image.pullPolicy=IfNotPresent \
    --set ipam.mode=kubernetes \
-   --set bgpControlPlane.enabled=true
+   --set bgpControlPlane.enabled=true \
+   --set tunnel=disabled \
+   --set ipv4NativeRoutingCIDR=10.0.0.0/8
