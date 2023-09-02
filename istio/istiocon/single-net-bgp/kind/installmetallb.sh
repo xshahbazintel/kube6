@@ -9,18 +9,18 @@ docker pull quay.io/metallb/speaker:v0.13.10
 
 # Load images to both clusters
 echo "Loading metallb images to both clusters..."
-kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
-kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
+kind load docker-image --name $CLUSTER3_NAME quay.io/metallb/controller:v0.13.10
+kind load docker-image --name $CLUSTER3_NAME quay.io/metallb/controller:v0.13.10
 
-kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
-kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
+kind load docker-image --name $CLUSTER4_NAME quay.io/metallb/speaker:v0.13.10
+kind load docker-image --name $CLUSTER4_NAME quay.io/metallb/speaker:v0.13.10
 
 # Install metallb using the latest version 13.10
-echo "install metallb on $CLUSTER1_NAME..."
-kubectl apply --context="${CLUSTER1_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
+echo "install metallb on $CLUSTER3_NAME..."
+kubectl apply --context="${CLUSTER3_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 
-echo "install metallb on $CLUSTER2_NAME..."
-kubectl apply --context="${CLUSTER2_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
+echo "install metallb on $CLUSTER4_NAME..."
+kubectl apply --context="${CLUSTER4_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 
 sleep 20
 
