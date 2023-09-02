@@ -3,11 +3,11 @@
 . ../../config.sh
 
 # Delete the cluster with name ambient
-echo "Deleting $CLUSTER1_NAME..."
-kind delete cluster --name $CLUSTER1_NAME
+echo "Deleting $CLUSTER3_NAME..."
+kind delete cluster --name $CLUSTER3_NAME
 
-echo "Deleting $CLUSTER2_NAME..."
-kind delete cluster --name $CLUSTER2_NAME
+echo "Deleting $CLUSTER4_NAME..."
+kind delete cluster --name $CLUSTER4_NAME
 
 # Verify that the cluster is deleted
 echo "Verifying cluster deletion..."

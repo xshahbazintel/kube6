@@ -77,6 +77,13 @@ helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER6_CTX 
    --set ipam.mode=kubernetes \
    --set bgpControlPlane.enabled=true
 
+sleep 10
+
+echo "Installing metallb..."
+./installmetallb.sh
+
+sleep 10
+
 # prepare clustermesh
 echo "Installing cilium-ca secret..."
 kubectl --context $CLUSTER6_CTX delete secret cilium-ca -n kube-system
