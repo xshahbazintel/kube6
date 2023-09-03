@@ -2,8 +2,13 @@
 
 # Invoke the kind script
 source installkind.sh
-# Wait for 5 sec
-sleep 5
+# Wait for 10 sec
+sleep 10
 
 # Invoke the metallb script
 source installmetallb.sh
+# Wait for 5 sec
+sleep 5
+
+# Invoke the clustermesh script
+source ../cilium/setup-clustermesh.sh
