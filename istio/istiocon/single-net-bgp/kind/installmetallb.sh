@@ -24,6 +24,7 @@ kubectl apply --context="${CLUSTER4_CTX}" -f https://raw.githubusercontent.com/m
 
 # wait for metallb to get ready
 echo "Wait 2 sec for metallb to get ready..."
+
 sleep 20
 
 #create metallb pool and L2 advertisment
