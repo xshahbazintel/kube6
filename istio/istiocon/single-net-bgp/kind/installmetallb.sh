@@ -23,7 +23,7 @@ echo "install metallb on $CLUSTER4_NAME..."
 kubectl apply --context="${CLUSTER4_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 
 # wait for metallb to get ready
-echo "Wait 2 sec for metallb to get ready..."
+echo "Wait 20 sec for metallb to get ready..."
 
 sleep 20
 
