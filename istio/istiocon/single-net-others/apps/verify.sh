@@ -16,6 +16,16 @@ echo $(kubectl \
 
 echo "*************************"
 
+echo "$CLUSTER5_NAME worker nodes..."
+kubectl --context="${CLUSTER5_CTX}" get nodes -o custom-columns=NAME:.metadata.name,IP:.status.addresses[0].address
+
+echo "*************************"
+
+echo "$CLUSTER5_NAME worker route..."
+docker exec clu5-worker ip route
+
+echo "*************************"
+
 echo "$CLUSTER5_NAME Sleep endpoints of helloworld..."
 istioctl pc ep deploy/sleep -n default --cluster "outbound|5000||helloworld.default.svc.cluster.local" --context="${CLUSTER5_CTX}"
 echo "$CLUSTER6_NAME Sleep endpoints of helloworld..."
