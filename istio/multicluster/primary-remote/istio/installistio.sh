@@ -8,63 +8,69 @@ docker pull $HUB/pilot:$TAG
 docker pull $HUB/proxyv2:$TAG
 
 echo "load istio images to the clusters..."
-kind load docker-image --name $CLUSTER1_NAME $HUB/pilot:$TAG
-kind load docker-image --name $CLUSTER1_NAME $HUB/proxyv2:$TAG
+kind load docker-image --name $CLUSTER7_NAME $HUB/pilot:$TAG
+kind load docker-image --name $CLUSTER7_NAME $HUB/proxyv2:$TAG
 
-kind load docker-image --name $CLUSTER2_NAME $HUB/pilot:$TAG
-kind load docker-image --name $CLUSTER2_NAME $HUB/proxyv2:$TAG
+kind load docker-image --name $CLUSTER8_NAME $HUB/pilot:$TAG
+kind load docker-image --name $CLUSTER8_NAME $HUB/proxyv2:$TAG
 
 # point this to your latest build binary
 istioctl_latest=/usr/local/bin/istioctl
 
-# install certs in both clusters
-kubectl create namespace istio-system --context=${CLUSTER1_CTX}
-kubectl create secret generic cacerts -n istio-system \
-      --from-file=certs/cluster1/ca-cert.pem \
-      --from-file=certs/cluster1/ca-key.pem \
-      --from-file=certs/cluster1/root-cert.pem \
-      --from-file=certs/cluster1/cert-chain.pem \
-      --context=${CLUSTER1_CTX}
+# Install istio iop profile on CLUSTER7
+echo "Installing istio in $CLUSTER7_NAME..."
+kubectl create namespace istio-system --context=${CLUSTER7_CTX}
+kubectl --context="${CLUSTER7_CTX}" label namespace istio-system topology.istio.io/network=network1
+istioctl --context="${CLUSTER7_CTX}" install --set values.pilot.env.EXTERNAL_ISTIOD=true -f iop-clu7.yaml --skip-confirmation
 
-kubectl create namespace istio-system --context=${CLUSTER2_CTX}
-kubectl create secret generic cacerts -n istio-system \
-      --from-file=certs/cluster2/ca-cert.pem \
-      --from-file=certs/cluster2/ca-key.pem \
-      --from-file=certs/cluster2/root-cert.pem \
-      --from-file=certs/cluster2/cert-chain.pem \
-      --context=${CLUSTER2_CTX}
+echo "expose the controlplane in $CLUSTER7_NAME..."
+kubectl --context="${CLUSTER7_CTX}" apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/master/samples/multicluster/expose-istiod.yaml
 
-# Install istio iop profile on cluster1
-echo "Installing istio in $CLUSTER1_NAME..."
-kubectl --context="${CLUSTER1_CTX}" label namespace istio-system topology.istio.io/network=network1
+echo "expose services in $CLUSTER7_NAME..."
+kubectl --context="${CLUSTER7_CTX}" apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/master/samples/multicluster/expose-services.yaml
 
-istioctl --context="${CLUSTER1_CTX}" install -f iop-clu1.yaml --skip-confirmation
+# Install istio profile on CLUSTER8
+echo "Installing istio in $CLUSTER8_NAME..."
+kubectl create namespace istio-system --context=${CLUSTER8_CTX}
+kubectl --context="${CLUSTER8_CTX}" annotate namespace istio-system topology.istio.io/controlPlaneClusters=cluster7 --overwrite
+kubectl --context="${CLUSTER8_CTX}" label namespace istio-system topology.istio.io/network=network2 --overwrite
 
-echo "expose services in $CLUSTER1_NAME..."
-kubectl --context="${CLUSTER1_CTX}" apply -n istio-system -f expose-mc-svcs.yaml
+#Save the address of CLUSTER7’s east-west gateway.
+export DISCOVERY_ADDRESS=$(kubectl \
+    --context="${CLUSTER7_CTX}" \
+    -n istio-system get svc istio-eastwestgateway \
+    -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-# Install istio profile on cluster2
-echo "Installing istio in $CLUSTER2_NAME..."
-kubectl --context="${CLUSTER2_CTX}" label namespace istio-system topology.istio.io/network=network2
+istioctl --context="${CLUSTER8_CTX}" install -y -f - <<EOF
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  profile: remote
+  values:
+    istiodRemote:
+      injectionPath: /inject/cluster/cluster8/net/network2
+    global:
+      remotePilotAddress: ${DISCOVERY_ADDRESS}
+EOF
 
-istioctl --context="${CLUSTER2_CTX}" install -f iop-clu2.yaml --skip-confirmation
-
-echo "expose services in $CLUSTER2_NAME..."
-kubectl --context="${CLUSTER2_CTX}" apply -n istio-system -f expose-mc-svcs.yaml
-
-## fetch cluster2 controlplan address
-#SERVER_CLU2=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' clu2-control-plane)
 
 # Enable Endpoint Discovery
-echo "Enable Endpoint Discovery..."
-istioctl x create-remote-secret \
-    --context="${CLUSTER2_CTX}" \
-    --name=cluster2 \
-    --server=https://clu2-control-plane:6443 | \
-    kubectl apply -f - --context="${CLUSTER1_CTX}"
+#echo "Enable Endpoint Discovery..."
+#istioctl x create-remote-secret \
+#    --context="${CLUSTER8_CTX}" \
+#    --name=CLUSTER8 \
+#    --server=https://clu2-control-plane:6443 | \
+#    kubectl apply -f - --context="${CLUSTER7_CTX}"
 
-istioctl x create-remote-secret \
-    --context="${CLUSTER1_CTX}" \
-    --name=cluster1 \
-    --server=https://clu1-control-plane:6443 | \
-    kubectl apply -f - --context="${CLUSTER2_CTX}"
+echo "share remote-secret of cluster8 with cluster7..."
+istioctl create-remote-secret \
+    --context="${CLUSTER8_CTX}" \
+    --name=cluster8 \
+    --server=https://clu8-control-plane:6443 | \
+    kubectl apply -f - --context="${CLUSTER7_CTX}"
+
+echo "installing EW gateway in cluster8..."
+istioctl --context="${CLUSTER8_CTX}" install -y -f iop-clu8.yaml
+
+echo "expose services in $CLUSTER8_NAME..."
+kubectl --context="${CLUSTER8_CTX}" apply -n istio-system -f https://raw.githubusercontent.com/istio/istio/master/samples/multicluster/expose-services.yaml
