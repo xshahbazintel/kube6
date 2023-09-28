@@ -38,6 +38,7 @@ metadata:
   name: pod-linklocal
   annotations:
     traffic.sidecar.istio.io/excludeInterfaces: net1
+    traffic.sidecar.istio.io/excludeOutboundIPRanges: 0.0.0.0/0
     k8s.v1.cni.cncf.io/networks: '[
             { "name": "macvlan-conf-static",
               "ips": [ "169.254.1.11/24" ] }

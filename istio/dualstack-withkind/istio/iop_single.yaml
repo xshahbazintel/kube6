@@ -3,5 +3,9 @@ kind: IstioOperator
 metadata:
   name: istio
 spec:
-  hub: docker.io/abasitt
-  tag: abasitt
+#  values:
+#    global:
+#      proxy:
+#        excludeIPRanges: "0.0.0.0"
+#  hub: docker.io/abasitt
+#  tag: abasitt
