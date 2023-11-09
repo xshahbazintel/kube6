@@ -69,7 +69,13 @@ helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER1_CTX 
    --set tunnel=disabled \
    --set ipv4.enabled=false \
    --set ipv6.enabled=true \
-   --set ipv6NativeRoutingCIDR=10.0.0.0/8
+   --set enableIPv6Masquerade=true \
+   --set autoDirectNodeRoutes=true \
+   --set ipv6NativeRoutingCIDR="2001:db8:0:0::/32" \
+   --set hubble.enabled=true \
+   --set hubble.relay.enabled=true \
+   --set hubble.ui.enabled=true \
+   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
 
 echo "Installing cilium in $CLUSTER2_NAME..."
 helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER2_CTX \
@@ -83,4 +89,10 @@ helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER2_CTX 
    --set tunnel=disabled \
    --set ipv4.enabled=false \
    --set ipv6.enabled=true \
-   --set ipv6NativeRoutingCIDR=10.0.0.0/8
+   --set enableIPv6Masquerade=true \
+   --set autoDirectNodeRoutes=true \
+   --set ipv6NativeRoutingCIDR="2001:db8:0:0::/32" \
+   --set hubble.enabled=true \
+   --set hubble.relay.enabled=true \
+   --set hubble.ui.enabled=true \
+   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
