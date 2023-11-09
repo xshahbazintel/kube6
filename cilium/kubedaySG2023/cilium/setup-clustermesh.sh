@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../../config.sh
+. ../config.sh
 
 # prepare clustermesh
 echo "Installing cilium-ca secret..."

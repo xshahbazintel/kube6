@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../../config.sh
+. ../config.sh
 
 # download docker images to a host
 echo "Pulling metallb images to a docker host..."
@@ -38,7 +38,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 172.18.255.151-172.18.255.159
+  - fc00:f853:ccd:e793:ffff:1::1-fc00:f853:ccd:e793:ffff:1::10
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -57,7 +57,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 172.18.255.161-172.18.255.169
+  - fc00:f853:ccd:e793:ffff:2::1-fc00:f853:ccd:e793:ffff:2::10
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
