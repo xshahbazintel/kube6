@@ -10,6 +10,6 @@ spec:
     name: tcp
     protocol: TCP
   location: MESH_INTERNAL
-  resolution: DNS
+  resolution: STATIC
   endpoints:
-  - address: helloworld.default.svc.cluster.local
+  - address: 2001:db8:42:1::ec67
