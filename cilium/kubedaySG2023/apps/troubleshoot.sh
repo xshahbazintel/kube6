@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../../config.sh
+. ../config.sh
 
 # makesure the clustermesh is properly setup and all the routes are available on the nodes
 cilium clustermesh status --context $CLUSTER1_CTX --wait
