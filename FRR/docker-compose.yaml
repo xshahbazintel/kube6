@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-    frr:
-        image: frrouting/frr:v8.5.3
+    frr_host:
+        image: frrouting/frr:latest
         hostname: frr_host
         container_name: frr_host
         network_mode: host
