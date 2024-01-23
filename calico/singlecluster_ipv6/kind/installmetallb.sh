@@ -10,17 +10,12 @@ docker pull quay.io/metallb/speaker:v0.13.10
 # Load images to both clusters
 echo "Loading metallb images to both clusters..."
 kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
-kind load docker-image --name $CLUSTER1_NAME quay.io/metallb/controller:v0.13.10
 
-kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
 kind load docker-image --name $CLUSTER2_NAME quay.io/metallb/speaker:v0.13.10
 
 # Install metallb using the latest version 13.10
 echo "install metallb on $CLUSTER1_NAME..."
 kubectl apply --context="${CLUSTER1_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
-
-echo "install metallb on $CLUSTER2_NAME..."
-kubectl apply --context="${CLUSTER2_CTX}" -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
 
 # wait for metallb to get ready
 echo "Wait 20 sec for metallb to get ready..."
@@ -38,7 +33,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - fc00:f853:ccd:e793:ffff:1::1-fc00:f853:ccd:e793:ffff:1::10
+  - fc00:f853:ccd:e793:ffff:11::1-fc00:f853:ccd:e793:ffff:11::10
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -46,23 +41,3 @@ metadata:
   name: all-pools
   namespace: metallb-system
 EOF
-
-echo "creating metallb l2 pool on $CLUSTER2_NAME..."
-kubectl apply --context="${CLUSTER2_CTX}" -f - <<EOF
----
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: kind-pool
-  namespace: metallb-system
-spec:
-  addresses:
-  - fc00:f853:ccd:e793:ffff:2::1-fc00:f853:ccd:e793:ffff:2::10
----
-apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
-metadata:
-  name: all-pools
-  namespace: metallb-system
-EOF
-

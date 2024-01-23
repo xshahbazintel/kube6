@@ -1,0 +1,8 @@
+apiVersion: projectcalico.org/v3
+kind: BGPPeer
+metadata:
+  name: my-global-peer
+spec:
+  peerIP: fd74:ca9b:3a09:868c:10:9:69:75
+  asNumber: 65100
+  keepOriginalNextHop: true
