@@ -34,27 +34,6 @@ kind load docker-image --name $CLUSTER1_NAME docker.io/calico/cni:v3.26.4
 kind load docker-image --name $CLUSTER1_NAME docker.io/calico/node:v3.26.4
 kind load docker-image --name $CLUSTER1_NAME  docker.io/calico/kube-controllers:v3.26.4
 
-# add helm repo to both clusters
-#echo "Adding cilium helm repo..."
-#helm repo add cilium https://helm.cilium.io/
-#
-## install cilium
-#echo "Installing cilium in $CLUSTER1_NAME..."
-#helm install cilium cilium/cilium --version 1.14.1 --kube-context $CLUSTER1_CTX \
-#   --namespace kube-system \
-#   --set cluster.name=clu1 \
-#   --set cluster.id=1 \
-#   --set operator.replicas=1 \
-#   --set image.pullPolicy=IfNotPresent \
-#   --set ipam.mode=kubernetes \
-#   --set bgpControlPlane.enabled=true \
-#   --set tunnel=disabled \
-#   --set ipv4.enabled=false \
-#   --set ipv6.enabled=true \
-#   --set enableIPv6Masquerade=true \
-#   --set autoDirectNodeRoutes=true \
-#   --set ipv6NativeRoutingCIDR="2001:db8:0:0::/32" \
-#   --set hubble.enabled=true \
-#   --set hubble.relay.enabled=true \
-#   --set hubble.ui.enabled=true \
-#   --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
+# apply calico cni kustomize
+echo "install Calico CNI to clusters..."
+kubectl --context kind-$CLUSTER1_NAME apply -k calico/overlay-ipv6
