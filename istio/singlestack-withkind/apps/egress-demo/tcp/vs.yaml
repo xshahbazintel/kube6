@@ -1,3 +1,4 @@
+#vs from sidecar to egw
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -20,6 +21,7 @@ spec:
         port:
           number: 443
 
+#vs from egw to final destination
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
