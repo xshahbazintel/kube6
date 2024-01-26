@@ -4,8 +4,8 @@
 DIR=$(git rev-parse --show-toplevel)
 
 #multi-network clusters
-CLUSTER1_NAME=clu1
-CLUSTER2_NAME=clu2
+CLUSTER1_NAME=cal61
+CLUSTER2_NAME=cal62
 
 
 
