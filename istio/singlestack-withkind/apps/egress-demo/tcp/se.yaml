@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: redis-svc
+spec:
+  hosts:
+  - redis.abasitt.tech
+  ports:
+  - number: 6379
+    name: tcp
+    protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  endpoints:
+    - address: 10.9.69.75
+
