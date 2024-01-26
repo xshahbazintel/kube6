@@ -1,3 +1,5 @@
+# 2:DR to force istio mtls from sidecar to egress gateway
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:

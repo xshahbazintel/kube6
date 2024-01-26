@@ -1,3 +1,5 @@
+# egress gateway tls listener for istio mutual tls from sidecar
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:

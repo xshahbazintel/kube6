@@ -1,3 +1,5 @@
+#1:SE to create listener on port 6379
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
