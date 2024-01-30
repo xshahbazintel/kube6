@@ -5,6 +5,9 @@ kind: DestinationRule
 metadata:
   name: redis-egressgw-dr
 spec:
+  # default export to localns because of svc hierarchy . since host is owned by istio-system ns. if this is applied in istio-system ns, then it will be exported everywhere.
+  exportTo:
+  - "."
   host: istio-egressgateway.istio-system.svc.cluster.local
   subsets:
   - name: redis

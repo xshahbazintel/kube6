@@ -5,6 +5,14 @@ kind: VirtualService
 metadata:
   name: redis-mesh-vs
 spec:
+  # limit the tcp route to ns e.g. default in this case.
+  # istioctl pc l sleep-9454cc476-fcsgl.demo --port 6379
+  # ADDRESS       PORT MATCH DESTINATION
+  # 240.240.152.6 6379 ALL   Cluster: outbound|443|redis|istio-egressgateway.istio-system.svc.cluster.local
+  # changed to
+  # 240.240.152.6 6379 ALL   Cluster: outbound|6379||redis.abasitt.tech    # this will completely disappear once I make SE export to .
+  exportTo:
+  - "."
   hosts:
   - redis.abasitt.tech
   gateways:
