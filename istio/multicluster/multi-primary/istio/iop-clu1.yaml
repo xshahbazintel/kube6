@@ -55,7 +55,7 @@ spec:
       k8s:
         env:
           - name: PILOT_TRACE_SAMPLING
-            value: "100"
+            value: "1"
         resources:
           requests:
             cpu: 10m
@@ -65,7 +65,7 @@ spec:
     global:
       meshID: mesh1
       multiCluster:
-        clusterName: cluster7
+        clusterName: cluster1
       network: network1
       proxy:
         resources:

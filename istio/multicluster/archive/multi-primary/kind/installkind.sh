@@ -14,16 +14,12 @@ CLUSTER2_NAME=clu2
 # Create cluster1 cluster
 echo "Creating cluster $CLUSTER1_NAME..."
 kind create cluster --name $CLUSTER1_NAME --config cluster.yaml
-# Add topology labels to nodes in cluster1
-echo "Adding topology labels to nodes in cluster $CLUSTER1_NAME..."
-kubectl label nodes --overwrite --all topology.kubernetes.io/region=us-west topology.kubernetes.io/zone=us-west1-a
+
 
 # Create cluster2 cluster
 echo "Creating cluster $CLUSTER2_NAME..."
 kind create cluster --name $CLUSTER2_NAME --config cluster.yaml
-# Add topology labels to nodes in cluster2
-echo "Adding topology labels to nodes in cluster $CLUSTER2_NAME..."
-kubectl label nodes --overwrite --all topology.kubernetes.io/region=us-east topology.kubernetes.io/zone=us-east1-a
+
 
 # Verify that the cluster is running
 echo "Verifying cluster $CLUSTER1_NAME..."
