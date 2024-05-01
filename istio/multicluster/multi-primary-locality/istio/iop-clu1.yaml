@@ -8,7 +8,15 @@ spec:
         ISTIO_META_DNS_CAPTURE: "true"
         # Enable automatic address allocation, optional
         ISTIO_META_DNS_AUTO_ALLOCATE: "true"
+    #enable accesslogs
     accessLogFile: /dev/stdout
+    #enable clusterlocaltraffic restrict to local cluster per namespace
+    serviceSettings:
+    - settings:
+        clusterLocal: true
+      hosts:
+      #default ns, add additional ns per requirements
+      - "*.default.svc.cluster.local"
 
   components:
     ingressGateways:
