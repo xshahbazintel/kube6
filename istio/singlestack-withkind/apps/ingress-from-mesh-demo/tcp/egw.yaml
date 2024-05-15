@@ -1,0 +1,18 @@
+# egress gateway tls listener for istio mutual tls from sidecar
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: redis-egressgw
+spec:
+  selector:
+    istio: egressgateway
+  servers:
+  - port:
+      number: 443
+      name: tls
+      protocol: TLS
+    hosts:
+    - redis.abasitt.tech
+    tls:
+      mode: ISTIO_MUTUAL

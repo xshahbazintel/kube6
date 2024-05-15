@@ -1,0 +1,19 @@
+# egress gateway tls listener for istio mutual tls from sidecar
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: portal-gw
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: https-for-mtls-termination
+      protocol: HTTPS
+    hosts:
+    - "portal2.abasitt.tech"
+    tls:
+      mode: ISTIO_MUTUAL
+    

@@ -1,0 +1,23 @@
+# 2:DR to force istio mtls from sidecar to egress gateway
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: portal2-dr
+  namespace: default
+spec:
+  # default export to localns because of svc hierarchy . since host is owned by istio-system ns. if this is applied in istio-system ns, then it will be exported everywhere.
+  #exportTo:
+  #- "."
+  host: istio-ingressgateway.istio-system.svc.cluster.local
+  subsets:
+  - name: upgrade-mtls
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
+      portLevelSettings:
+      - port:
+          number: 80
+        tls:
+          mode: ISTIO_MUTUAL
+          sni: "portal2.abasitt.tech"

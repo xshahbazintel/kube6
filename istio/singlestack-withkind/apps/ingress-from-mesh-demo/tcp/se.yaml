@@ -1,0 +1,25 @@
+#1:SE to create listener on port 6379
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: redis-svc
+spec:
+  # limit export to localns e.g. default in my case.
+  # istioctl pc l sleep-9454cc476-fcsgl.demo --port 6379
+  # ADDRESS       PORT MATCH DESTINATION
+  # 240.240.152.6 6379 ALL   Cluster: outbound|6379||redis.abasitt.tech
+  # after applying exportTo to . , nothing in other ns except default
+  exportTo:
+  - "."
+  hosts:
+  - redis.abasitt.tech
+  ports:
+  - number: 6379
+    name: tcp
+    protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  endpoints:
+    - address: 10.9.69.75
+

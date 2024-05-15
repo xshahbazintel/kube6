@@ -1,0 +1,54 @@
+# 3: mes VS to route from sidecar to egw
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: portal2-mesh-vs
+  namespace: default
+spec:
+  # limit the tcp route to ns e.g. default in this case.
+  # istioctl pc l sleep-9454cc476-fcsgl.demo --port 6379
+  # ADDRESS       PORT MATCH DESTINATION
+  # 240.240.152.6 6379 ALL   Cluster: outbound|443|redis|istio-egressgateway.istio-system.svc.cluster.local
+  # changed to
+  # 240.240.152.6 6379 ALL   Cluster: outbound|6379||redis.abasitt.tech    # this will completely disappear once I make SE export to .
+  exportTo:
+  - "."
+  hosts:
+  - portal2.abasitt.tech
+  gateways:
+  - mesh
+  http:
+  - name: portal2-meshroute
+    match:
+      - authority:
+          exact: "portal2.abasitt.tech:8082"
+      #- port: 8082 #use port if you are sure that all the traffic from this port needs to redirect via ingress, else stick with the hostname
+    route:
+    - destination:
+        host: istio-ingressgateway.istio-system.svc.cluster.local
+        subset: upgrade-mtls
+        port:
+          number: 80
+
+# 5: egw vs to route from egw to final destination
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: portal2-igw-vs
+spec:
+  hosts:
+  - "portal2.abasitt.tech"
+  gateways:
+  - portal-gw
+  http:
+  - match:
+      - authority:
+          exact: "portal2.abasitt.tech:8082"
+    route:
+    - destination:
+        host: httpbin.default.svc.cluster.local
+        port:
+          number: 8000
+      weight: 100
