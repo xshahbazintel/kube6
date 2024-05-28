@@ -1,0 +1,24 @@
+# daemonset-patch.yaml
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: calico-node
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: calico-node
+        env:
+        - name: IP
+          value: "none"
+        - name: IP6 # IPV6_ENABLED
+          value: "autodetect"
+        # control the outgoing nat behavior
+        - name: CALICO_IPV6POOL_NAT_OUTGOING
+          value: "true"
+        - name: FELIX_IPV6SUPPORT
+          value: "true"
+        - name: CALICO_ROUTER_ID 
+          value: "hash"

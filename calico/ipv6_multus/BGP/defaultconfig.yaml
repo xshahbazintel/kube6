@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: BGPConfiguration
+metadata:
+  name: default
+spec:
+  logSeverityScreen: Info
+  nodeToNodeMeshEnabled: true
+  nodeMeshMaxRestartTime: 120s
+  asNumber: 64501
+  serviceClusterIPs:
+    - cidr: 2001:db8:42:1::/112
