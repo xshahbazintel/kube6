@@ -179,7 +179,7 @@ spec:
       serviceAccountName: multus
       containers:
       - name: kube-multus
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot
         command: ["/thin_entrypoint"]
         args:
         - "/etc/cni/net.d/00-multus.conf"

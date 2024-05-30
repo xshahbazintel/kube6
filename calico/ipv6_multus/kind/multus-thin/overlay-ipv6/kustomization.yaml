@@ -8,3 +8,8 @@ resources:
 #components:
 #- ../components/configmap
 #- ../components/calico-node
+
+images:
+  - name: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot
+    newName: ghcr.io/k8snetworkplumbingwg/multus-cni
+    newTag: v4.0.2-debug
