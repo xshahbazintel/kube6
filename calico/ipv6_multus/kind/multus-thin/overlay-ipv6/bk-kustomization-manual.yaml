@@ -10,7 +10,7 @@ patches:
       kind: DaemonSet
       name: kube-multus-ds
       namespace: kube-system
-    path: ds-patch-robin.yaml
+    path: ds-patch.yaml
   - target:
       kind: ConfigMap
       name: multus-cni-config

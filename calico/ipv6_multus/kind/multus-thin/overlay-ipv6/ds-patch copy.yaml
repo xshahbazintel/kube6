@@ -1,0 +1,27 @@
+# daemonset-patch.yaml
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-multus-ds
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: kube-multus
+        env:
+        - name: KUBERNETES_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        command:
+        - sh
+        - -c
+        args:
+        - |
+          set -e
+          set -x
+          cp /tmp/multus-conf/70-multus.conf /tmp/00-multus.conf.template
+          sed "s|__KUBERNETES_NODE_NAME__|${KUBERNETES_NODE_NAME}|g" /tmp/00-multus.conf.template > /tmp/00-multus.conf
+          /thin_entrypoint --multus-conf-file=/tmp/00-multus.conf --cni-version=0.3.1 --multus-autoconfig-dir=/host/etc/cni/net.d --cni-conf-dir=/host/etc/cni/net.d

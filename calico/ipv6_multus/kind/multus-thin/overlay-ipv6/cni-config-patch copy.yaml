@@ -1,0 +1,67 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: multus-cni-config
+  namespace: kube-system
+data:
+  cni-conf.json: |
+    {
+      "name": "multus-cni-network",
+      "type": "multus",
+      "confDir": "/etc/cni/net.d",
+      "binDir": "/opt/cni/bin",
+      "logFile": "/var/log/multus.log",
+      "logLevel": "debug",
+      "multusNamespace": "kube-system",
+      "capabilities": {
+        "portMappings": true
+      },
+      "delegates": [
+        {
+            "cniVersion": "0.3.1",
+            "name": "calico",
+            "plugins": [
+                {
+                    "datastore_type": "kubernetes",
+                    "ipam": {
+                        "type": "calico-ipam",
+                        "assign_ipv4": "false",
+                        "assign_ipv6": "true"
+                    },
+                    "kubernetes": {
+                        "kubeconfig": "/etc/cni/net.d/calico-kubeconfig"
+                    },
+                    "log_level": "info",
+                    "log_file_path": "/var/log/calico/cni/cni.log",
+                    "mtu": 1500,
+                    "nodename": "__KUBERNETES_NODE_NAME__",
+                    "policy": {
+                        "type": "k8s"
+                    },
+                    "type": "calico"
+                },
+                {
+                    "type": "tuning",
+                    "sysctl": {
+                        "net.ipv6.conf.all.accept_ra": "0",
+                        "net.ipv6.conf.default.accept_ra": "0",
+                    }
+                },
+                {
+                    "type": "portmap",
+                    "snat": true,
+                    "capabilities": {
+                        "portMappings": true
+                    }
+                },
+                {
+                    "type": "bandwidth",
+                    "capabilities": {"bandwidth": true}
+                }
+            ]
+        }
+      ],
+      "kubeconfig": "/etc/cni/net.d/multus.d/multus.kubeconfig"
+    }
+---

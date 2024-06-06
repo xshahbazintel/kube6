@@ -1,0 +1,32 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: multus-cni-config
+  namespace: kube-system
+data:
+  cni-conf.json: |
+    {
+      "cniVersion": "0.3.1",
+      "name": "node-cni-network",
+      "type": "multus",
+      "kubeconfig": "/etc/kubernetes/node-kubeconfig.yaml",
+      "confDir": "/etc/cni/multus/net.d",
+      "cniDir": "/var/lib/cni/multus",
+      "binDir": "/opt/cni/bin",
+      "logFile": "/var/log/multus.log",
+      "logLevel": "debug",
+      "logOptions": {
+          "maxAge": 5,
+          "maxSize": 100,
+          "maxBackups": 5,
+          "compress": true
+      },
+      "capabilities": {
+          "portMappings": true
+      },    
+      "namespaceIsolation": false,
+      "clusterNetwork": "/etc/cni/net.d/10-calico.conflist",
+      "multusNamespace": "kube-system",
+    }
+---
