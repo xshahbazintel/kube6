@@ -29,13 +29,14 @@ docker pull quay.io/cilium/cilium:v1.15.6
 
 echo "load cilium image to the clusters..."
 kind load docker-image --name $CLUSTER1_NAME quay.io/cilium/cilium:v1.15.6
-kind load docker-image --name $CLUSTER2_NAME quay.io/cilium/cilium:v1.15.6
+kind load docker-image --name $CLUSTER1_NAME quay.io/cilium/cilium:v1.15.6
 
 # add helm repo to both clusters
 echo "Adding cilium helm repo..."
 helm repo add cilium https://helm.cilium.io/
 
 # install cilium
+helm repo update
 echo "Installing cilium in $CLUSTER1_NAME..."
 helm install cilium cilium/cilium --version 1.15.6 --kube-context $CLUSTER1_CTX \
    --namespace kube-system \
@@ -45,7 +46,7 @@ helm install cilium cilium/cilium --version 1.15.6 --kube-context $CLUSTER1_CTX 
    --set image.pullPolicy=IfNotPresent \
    --set ipam.mode=kubernetes \
    --set bgpControlPlane.enabled=true \
-   --set tunnel=disabled \
+   --set routingMode=native \
    --set ipv4.enabled=false \
    --set ipv6.enabled=true \
    --set enableIPv6Masquerade=true \
