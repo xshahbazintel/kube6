@@ -8,4 +8,4 @@ CLUSTER_CTX=kind-ipv4
 
 #istio version
 HUB=docker.io/istio
-TAG=1.19.6
+TAG=1.22.0
