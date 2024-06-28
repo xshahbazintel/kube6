@@ -10,14 +10,7 @@ spec:
         # Enable automatic address allocation, optional
         ISTIO_META_DNS_AUTO_ALLOCATE: "true"
     accessLogFile: /dev/stdout
-  meshNetworks: |-
-    networks:
-      network2:
-        endpoints:
-          - fromRegistry: cluster2
-        gateways:
-          - address: 172.18.0.9
-            port: 32231
+
   components:
     ingressGateways:
     - name: istio-ingressgateway
