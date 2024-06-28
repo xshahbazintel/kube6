@@ -12,4 +12,4 @@ CLUSTER2_CTX=kind-clu2
 
 #istio version
 HUB=docker.io/istio
-TAG=1.19.6
+TAG=1.22.0
