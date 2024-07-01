@@ -25,16 +25,26 @@ done
 
 # Load CNI images to both clusters
 echo "Pulling calico images to a docker host..."
-docker pull docker.io/calico/cni:v3.26.4
-docker pull docker.io/calico/node:v3.26.4
-docker pull docker.io/calico/kube-controllers:v3.26.4
+docker pull quay.io/tigera/operator:v1.34.0
+docker pull quay.io/calico/typha:v3.28.0
+docker pull quay.io/calico/node:v3.28.0
+docker pull quay.io/calico/cni:v3.28.0
+docker pull quay.io/calico/apiserver:v3.28.0
+docker pull quay.io/calico/kube-controllers:v3.28.0
+docker pull quay.io/calico/csi:v3.28.0
 
 echo "load calico images to the clusters..."
-kind load docker-image --name $CLUSTER1_NAME docker.io/calico/cni:v3.26.4
-kind load docker-image --name $CLUSTER1_NAME docker.io/calico/node:v3.26.4
-kind load docker-image --name $CLUSTER1_NAME  docker.io/calico/kube-controllers:v3.26.4
+kind load docker-image --name $CLUSTER1_NAME quay.io/tigera/operator:v1.34.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/typha:v3.28.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/node:v3.28.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/cni:v3.28.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/apiserver:v3.28.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/kube-controllers:v3.28.0
+kind load docker-image --name $CLUSTER1_NAME quay.io/calico/csi:v3.28.0
 
 # apply calico cni kustomize
 echo "install Calico CNI to clusters..."
-kubectl --context kind-$CLUSTER1_NAME create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.4/manifests/tigera-operator.yaml
+kubectl --context kind-$CLUSTER1_NAME create -f calico/tigera-ns.yaml
+kubectl --context kind-$CLUSTER1_NAME apply -f calico/calico-k8sep.yaml
+kubectl --context kind-$CLUSTER1_NAME create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
 kubectl create -f calico/operator-cr.yaml

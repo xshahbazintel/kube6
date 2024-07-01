@@ -8,8 +8,15 @@ spec:
   registry: quay.io
   imagePath: calico
   calicoNetwork:
+    linuxDataplane: BPF
     #bgp: Enabled
     # Note: The ipPools section cannot be modified post-install.
+    nodeAddressAutodetectionV6:
+      cidrs:
+        - "fc00:f853:ccd:e793::/64"
+    nodeAddressAutodetectionV4:
+      cidrs:
+        - "172.18.0.0/16"
     ipPools:
       - blockSize: 116
         cidr: 2001:db8:42:0::/56
@@ -28,8 +35,8 @@ spec:
 
 # This section configures the Calico API server.
 # For more information, see: https://projectcalico.docs.tigera.io/master/reference/installation/api#operator.tigera.io/v1.APIServer
-apiVersion: operator.tigera.io/v1
-kind: APIServer
-metadata:
-  name: default
-spec: {}
+#apiVersion: operator.tigera.io/v1
+#kind: APIServer
+#metadata:
+#  name: default
+#spec: {}
